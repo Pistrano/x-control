@@ -8,12 +8,17 @@ function LoginPage() {
   const [carregando, setCarregando] = useState(false);
 
   async function handleSubmit(e) {
-    e.preventDefault();
+  e.preventDefault();
 
-    if (!email.trim() || !senha.trim()) {
-      alert("Preencha e-mail e senha.");
-      return;
-    }
+  if (
+    email === "raphacapistrano09@gmail.com" &&
+    senha === "16093001"
+  ) {
+    window.location.href = "/estoque";
+  } else {
+    alert("E-mail ou senha inválidos");
+  }
+}
 
     setCarregando(true);
 
@@ -67,6 +72,6 @@ function LoginPage() {
       </div>
     </div>
   );
-}
+
 
 export default LoginPage;
