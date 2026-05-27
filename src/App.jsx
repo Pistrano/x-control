@@ -32,6 +32,36 @@ import RelatorioFinanceiroPage from "./pages/RelatorioFinanceiroPage";
 import RelatorioEstoquePage from "./pages/RelatorioEstoquePage";
 import RelatorioServicosPage from "./pages/RelatorioServicosPage";
 
+const usuariosSistema = {
+  "raphacapistrano09@gmail.com": {
+    nome: "Raphael",
+    funcao: "Administrador",
+  },
+  "marianadelmax@gmail.com": {
+    nome: "Mariana",
+    funcao: "Financeiro",
+  },
+  "jpfpanzini@gmail.com": {
+    nome: "Joao",
+    funcao: "Operacional",
+  },
+};
+
+function obterUsuarioSistema(user) {
+  const email = user?.email || "";
+  const cadastrado = usuariosSistema[email];
+
+  if (cadastrado) {
+    return { ...cadastrado, email };
+  }
+
+  return {
+    nome: user?.user_metadata?.nome || user?.user_metadata?.name || email.split("@")[0] || "Usuario",
+    funcao: "Usuario",
+    email,
+  };
+}
+
 function App() {
   const [sessao, setSessao] = useState(null);
   const [carregando, setCarregando] = useState(true);
@@ -72,6 +102,8 @@ function App() {
     return <LoginPage />;
   }
 
+  const usuarioAtual = obterUsuarioSistema(sessao.user);
+
   return (
     <BrowserRouter>
       <main className="layout">
@@ -79,7 +111,14 @@ function App() {
 
         <section className="conteudo">
           <div className="topbar-sistema">
-            <span>{sessao.user?.email}</span>
+            <div className="usuario-topbar">
+              <span className="usuario-status" aria-label="Online" title="Online" />
+
+              <div className="usuario-topbar-texto">
+                <strong>{usuarioAtual.nome}</strong>
+                <span>{usuarioAtual.funcao}</span>
+              </div>
+            </div>
 
             <button type="button" className="btn-sair" onClick={sair}>
               Sair
