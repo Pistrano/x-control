@@ -40,7 +40,7 @@ function EstoquePage() {
     const { data, error } = await supabase
       .from("estoque")
       .select("*")
-      .order("created_at", { ascending: false });
+      .order("nome", { ascending: true });
 
     if (error) {
       alert("Erro ao carregar estoque: " + error.message);

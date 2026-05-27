@@ -35,7 +35,7 @@ function EstoqueDetalhePage() {
       .from("movimentacoes_estoque")
       .select("*")
       .eq("item_estoque_id", id)
-      .order("created_at", { ascending: false });
+      .order("data", { ascending: false });
 
     if (!movError) {
       setMovimentacoes(movData || []);
