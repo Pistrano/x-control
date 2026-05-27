@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { supabase } from "../lib/supabase";
 import logoXMotors from "../assets/logo-xmotors.png";
 
 function LoginPage() {
@@ -11,30 +10,15 @@ function LoginPage() {
   e.preventDefault();
 
   if (
-    email === "raphacapistrano09@gmail.com" &&
+    email.trim() === "raphacapistrano09@gmail.com" &&
     senha === "16093001"
   ) {
-    window.location.href = "/estoque";
+    localStorage.setItem("logado", "true");
+    window.location.reload();
   } else {
     alert("E-mail ou senha inválidos");
   }
 }
-
-    setCarregando(true);
-
-    const { error } = await supabase.auth.signInWithPassword({
-      email: email.trim(),
-      password: senha,
-    });
-
-    if (error) {
-      alert("Erro ao entrar: " + error.message);
-      setCarregando(false);
-      return;
-    }
-
-    setCarregando(false);
-  }
 
   return (
     <div className="login-page">
@@ -72,6 +56,6 @@ function LoginPage() {
       </div>
     </div>
   );
-
+}
 
 export default LoginPage;

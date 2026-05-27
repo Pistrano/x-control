@@ -55,8 +55,9 @@ function App() {
   }, []);
 
   async function sair() {
-    await supabase.auth.signOut();
-  }
+  localStorage.removeItem("logado");
+  window.location.reload();
+}
 
   if (carregando) {
     return (
@@ -66,9 +67,44 @@ function App() {
     );
   }
 
-  if (!sessao) {
-    return <LoginPage />;
-  }
+  const logado = localStorage.getItem("logado");
+
+if (!logado) {
+  return <LoginPage />;
+}
+
+  return (
+  <BrowserRouter>
+    <main className="layout">
+      <Sidebar />
+
+      <section className="conteudo">
+  <div className="topbar-sistema">
+    <span>Bem-vindo, Raphael</span>
+
+    <button
+      type="button"
+      className="btn-sair"
+      onClick={sair}
+    >
+      Sair
+    </button>
+  </div>
+
+  <Routes>
+          <Route path="/" element={<DashboardPage />} />
+          <Route path="/clientes" element={<ClientesPage />} />
+          <Route path="/clientes/:id" element={<ClienteDetalhePage />} />
+          <Route path="/servicos" element={<ServicosPage />} />
+          <Route path="/lavagem" element={<LavagemPage />} />
+          <Route path="/custos" element={<CustosPage />} />
+          <Route path="/estoque" element={<EstoquePage />} />
+          <Route path="/relatorios" element={<RelatoriosPage />} />
+        </Routes>
+      </section>
+    </main>
+  </BrowserRouter>
+);
 
   return (
     <BrowserRouter>
