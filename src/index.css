@@ -79,11 +79,22 @@ textarea {
 }
 
 .sidebar-logo-img {
-  width: 76px;
-  height: 76px;
-  object-fit: cover;
-  border-radius: 18px;
-  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.28);
+  width: 165px;
+  height: auto;
+  object-fit: contain;
+  border-radius: 24px;
+
+  filter:
+    drop-shadow(
+      0 10px 28px
+      rgba(229, 57, 53, 0.16)
+    );
+
+  transition: .2s ease;
+}
+
+.sidebar-logo-img:hover {
+  transform: scale(1.02);
 }
 
 .sidebar-logo-texto {
@@ -1562,25 +1573,53 @@ textarea {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 16px;
-  color: #bdbdbd;
-  font-size: 13px;
+  gap: 14px;
+
+  margin-bottom: 18px;
+  padding: 12px 18px;
+
+  border-radius: 18px;
+
+  background:
+    rgba(255,255,255,0.02);
+
+  border:
+    1px solid
+    rgba(255,255,255,0.05);
+}
+
+.topbar-sistema span {
+  text-align: right;
 }
 
 .btn-sair {
-  background: rgba(255, 255, 255, 0.08);
+  background:
+    rgba(255,255,255,0.08);
+
   color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  padding: 9px 14px;
-  border-radius: 10px;
-  cursor: pointer;
+
+  border:
+    1px solid
+    rgba(255,255,255,0.12);
+
+  padding: 10px 15px;
+
+  border-radius: 12px;
+
   font-weight: 700;
+
+  transition: .2s ease;
 }
 
 .btn-sair:hover {
-  background: rgba(229, 9, 20, 0.22);
-  border-color: rgba(229, 9, 20, 0.5);
+  background:
+    rgba(229,9,20,.18);
+
+  border-color:
+    rgba(229,9,20,.35);
+
+  transform:
+    translateY(-1px);
 }/* =========================
    DASHBOARD MAIS COMPACTO
 ========================= */
@@ -1669,4 +1708,309 @@ textarea {
   .clientes-grid-horizontal {
     grid-template-columns: 1fr;
   }
+}.sidebar {
+  background:
+    linear-gradient(
+      180deg,
+      #15171c 0%,
+      #101114 100%
+    ) !important;
+
+  box-shadow:
+    inset -1px 0 0
+    rgba(255,255,255,.04);
+}
+
+.sidebar-link {
+  font-weight: 600;
+  letter-spacing: .2px;
+  border: 1px solid transparent;
+}
+
+.sidebar-link:hover {
+  transform:
+    translateX(3px);
+
+  background:
+    rgba(229, 57, 53, .10);
+
+  border-color:
+    rgba(229,57,53,.18);
+}
+
+.sidebar-link.ativo {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(229,57,53,.18),
+      rgba(120,20,20,.18)
+    ) !important;
+
+  border:
+    1px solid
+    rgba(229,57,53,.30);
+
+  box-shadow:
+    0 8px 20px
+    rgba(229,57,53,.12);
+}.topbar-sistema {
+  background:
+    rgba(22,22,22,.75);
+
+  border:
+    1px solid
+    rgba(255,255,255,.06);
+
+  backdrop-filter:
+    blur(10px);
+
+  border-radius: 18px;
+
+  padding:
+    14px 18px;
+
+  margin-bottom: 22px;
+
+  box-shadow:
+    0 10px 30px
+    rgba(0,0,0,.18);
+}
+
+.btn-sair {
+  transition: .2s ease;
+}
+
+.btn-sair:hover {
+  transform:
+    translateY(-1px);
+}.cliente-link-card,
+.dashboard-card,
+.cliente-dado-box,
+.veiculo-card {
+  transition:
+    transform .2s ease,
+    box-shadow .2s ease;
+}
+
+.cliente-link-card:hover,
+.dashboard-card:hover,
+.cliente-dado-box:hover,
+.veiculo-card:hover {
+  transform:
+    translateY(-3px);
+
+  box-shadow:
+    0 18px 35px
+    rgba(0,0,0,.22);
+}.dashboard-card-premium,
+.cliente-dado-box {
+  background:
+    linear-gradient(
+      180deg,
+      #1f2530 0%,
+      #181c22 100%
+    ) !important;
+
+  box-shadow:
+    0 10px 30px
+    rgba(0,0,0,.20);
+}
+
+.dashboard-card-premium:hover,
+.cliente-dado-box:hover {
+  transform:
+    translateY(-3px);
+
+  box-shadow:
+    0 18px 40px
+    rgba(0,0,0,.30);
+}/* ======================
+   REFINAMENTO DE CORES
+====================== */
+
+body {
+  background: #0b0d10 !important;
+}
+
+.layout {
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(180, 20, 20, 0.08),
+      transparent 24%
+    ),
+    linear-gradient(
+      180deg,
+      #0b0d10 0%,
+      #121418 100%
+    ) !important;
+}
+
+/* SIDEBAR */
+.sidebar {
+  background:
+    linear-gradient(
+      180deg,
+      #14161a 0%,
+      #101215 100%
+    ) !important;
+
+  border-right:
+    1px solid
+    rgba(255,255,255,.05);
+}
+
+/* MENU */
+.sidebar-link {
+  background:
+    rgba(255,255,255,.02);
+
+  color: #cfcfcf;
+}
+
+.sidebar-link:hover {
+  background:
+    rgba(180,20,20,.12);
+
+  color: #fff;
+}
+
+.sidebar-link.ativo {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(180,20,20,.20),
+      rgba(90,15,15,.20)
+    ) !important;
+
+  border:
+    1px solid
+    rgba(229,57,53,.22);
+}
+
+/* CARDS */
+.dashboard-card-premium,
+.cliente-dado-box,
+.cliente-link-card,
+.veiculo-card,
+.dashboard-service-card {
+  background:
+    linear-gradient(
+      180deg,
+      #1a1d22 0%,
+      #16191d 100%
+    ) !important;
+
+  border:
+    1px solid
+    rgba(255,255,255,.05);
+}
+
+/* TOPO */
+.topbar-sistema {
+  background:
+    rgba(255,255,255,.025);
+
+  border:
+    1px solid
+    rgba(255,255,255,.05);
+}
+
+/* TEXTO */
+.subtitulo,
+small,
+.cliente-dado-label {
+  color: #9ca3af !important;
+}
+
+/* VERMELHO MAIS ELEGANTE */
+.btn-principal,
+.login-form button {
+  background:
+    linear-gradient(
+      135deg,
+      #c62828,
+      #8e1515
+    ) !important;
+}/* ======================
+   DETALHES VERMELHOS PREMIUM
+====================== */
+
+/* brilho suave na sidebar */
+.sidebar::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 2px;
+  height: 100%;
+  background:
+    linear-gradient(
+      180deg,
+      transparent,
+      rgba(229,57,53,.22),
+      transparent
+    );
+}
+
+/* menu ativo mais vivo */
+.sidebar-link.ativo {
+  box-shadow:
+    inset 3px 0 0 #d32f2f,
+    0 8px 18px
+    rgba(229,57,53,.10);
+}
+
+/* topo vermelho discreto */
+.topbar-sistema {
+  position: relative;
+  overflow: hidden;
+}
+
+.topbar-sistema::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(229,57,53,.7),
+      transparent
+    );
+}
+
+/* cards com glow vermelho suave */
+.dashboard-card-premium:hover,
+.cliente-link-card:hover,
+.cliente-dado-box:hover,
+.veiculo-card:hover {
+  border-color:
+    rgba(229,57,53,.22) !important;
+
+  box-shadow:
+    0 14px 34px
+    rgba(229,57,53,.10);
+}
+
+/* títulos com leve destaque */
+h1,
+.clientes-secao-titulo {
+  text-shadow:
+    0 0 18px
+    rgba(229,57,53,.08);
+}
+
+/* botão sair mais X-Motors */
+.btn-sair:hover {
+  background:
+    rgba(229,57,53,.15);
+
+  box-shadow:
+    0 0 18px
+    rgba(229,57,53,.18);
 }
