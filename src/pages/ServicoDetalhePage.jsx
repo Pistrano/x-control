@@ -134,11 +134,13 @@ function ServicoDetalhePage() {
 
     const payload = {
       veiculo_id: veiculoId,
+      tipo_servico: form.ehLavagem ? "Lavagem" : "Serviço",
       descricao: form.descricao,
       status: estaEncerrado ? "Finalizado" : form.status,
       status_pagamento: form.statusPagamento,
       tipo_pagamento: form.tipoPagamento,
       funileiro_responsavel: form.funiRespOnsavel,
+      valor: Number(form.valorTotal || 0),
       valor_total: Number(form.valorTotal || 0),
       valor_gasto: Number(form.valorGasto || 0),
       comissao: Number(form.comissao || 0),

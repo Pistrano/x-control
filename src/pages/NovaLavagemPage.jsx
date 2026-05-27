@@ -106,10 +106,12 @@ function NovaLavagemPage() {
 
     const { error } = await supabase.from("servicos").insert([{
       veiculo_id: veiculoFinalId,
+      tipo_servico: "Lavagem",
       descricao: "Lavagem",
       status: statusPrincipal,
       status_pagamento: "Pendente",
       tipo_pagamento: "",
+      valor: valorLavagem,
       valor_total: valorLavagem,
       valor_gasto: valorCusto,
       comissao: 0,

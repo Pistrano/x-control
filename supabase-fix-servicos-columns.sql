@@ -20,10 +20,15 @@ add column if not exists created_at timestamptz default now();
 
 update public.servicos
 set
+  tipo_servico = coalesce(tipo_servico, 'Serviço'),
   status_pagamento = coalesce(status_pagamento, 'Pendente'),
+  valor = coalesce(valor, valor_total, valor_lavagem, 0),
   valor_total = coalesce(valor_total, 0),
   valor_gasto = coalesce(valor_gasto, 0),
   comissao = coalesce(comissao, 0),
   valor_liquido = coalesce(valor_liquido, 0),
   encerrado = coalesce(encerrado, false),
   created_at = coalesce(created_at, now());
+
+alter table public.servicos
+alter column tipo_servico set default 'Serviço';
