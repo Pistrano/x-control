@@ -13,6 +13,7 @@ function ServicoDetalhePage() {
   const [carregando, setCarregando] = useState(true);
   const [salvando, setSalvando] = useState(false);
   const [notificacaoEnviada, setNotificacaoEnviada] = useState(null);
+  const [funileiros, setFunileiros] = useState([]);
 
   const [statusAnterior, setStatusAnterior] = useState("Aguardando");
   const [statusLavagemAnterior, setStatusLavagemAnterior] = useState("andamento");
@@ -44,9 +45,15 @@ function ServicoDetalhePage() {
 
     const { data: clienteData } = await supabase.from("clientes").select("*").eq("id", clienteId).single();
     const { data: veiculoData } = await supabase.from("veiculos").select("*").eq("id", veiculoId).single();
+    const { data: funileirosData } = await supabase
+      .from("funcionarios")
+      .select("id, nome")
+      .eq("funcao", "FUNILEIRO")
+      .order("nome");
 
     setCliente(clienteData);
     setVeiculo(veiculoData);
+    setFunileiros(funileirosData || []);
 
     if (!isNovo) {
       const { data } = await supabase.from("servicos").select("*").eq("id", servicoId).single();
@@ -229,7 +236,18 @@ function ServicoDetalhePage() {
 
           <div className="form-group">
             <label>Funileiro responsável</label>
-            <input name="funiRespOnsavel" value={form.funiRespOnsavel} onChange={handleChange} placeholder="Nome do funileiro" />
+            <select name="funiRespOnsavel" value={form.funiRespOnsavel} onChange={handleChange}>
+              <option value="">Selecione o funileiro</option>
+              {form.funiRespOnsavel &&
+                !funileiros.some((funileiro) => funileiro.nome === form.funiRespOnsavel) && (
+                  <option value={form.funiRespOnsavel}>{form.funiRespOnsavel}</option>
+                )}
+              {funileiros.map((funileiro) => (
+                <option key={funileiro.id} value={funileiro.nome}>
+                  {funileiro.nome}
+                </option>
+              ))}
+            </select>
           </div>
 
           <div className="form-group">
