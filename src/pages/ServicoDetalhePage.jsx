@@ -153,10 +153,15 @@ function ServicoDetalhePage() {
       funcionario_lavagem: form.funcionarioLavagem,
     };
 
-    if (isNovo) {
-      await supabase.from("servicos").insert([payload]);
-    } else {
-      await supabase.from("servicos").update(payload).eq("id", servicoId);
+    const { error } = isNovo
+      ? await supabase.from("servicos").insert([payload])
+      : await supabase.from("servicos").update(payload).eq("id", servicoId);
+
+    if (error) {
+      console.error("Erro ao salvar serviço:", error);
+      alert("Erro ao salvar serviço: " + error.message);
+      setSalvando(false);
+      return;
     }
 
     const statusFinal = estaEncerrado ? "Finalizado" : form.status;
