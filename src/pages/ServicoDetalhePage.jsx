@@ -12,6 +12,7 @@ function ServicoDetalhePage() {
   const [veiculo, setVeiculo] = useState(null);
   const [carregando, setCarregando] = useState(true);
   const [salvando, setSalvando] = useState(false);
+  const [excluindo, setExcluindo] = useState(false);
   const [notificacaoEnviada, setNotificacaoEnviada] = useState(null);
   const [funileiros, setFunileiros] = useState([]);
 
@@ -174,6 +175,32 @@ function ServicoDetalhePage() {
     navigate("/servicos");
   }
 
+  async function excluirServico() {
+    if (isNovo || excluindo) return;
+
+    const confirmar = window.confirm(
+      "Tem certeza que deseja excluir este serviço? Essa ação não pode ser desfeita."
+    );
+
+    if (!confirmar) return;
+
+    setExcluindo(true);
+
+    const { error } = await supabase
+      .from("servicos")
+      .delete()
+      .eq("id", servicoId);
+
+    if (error) {
+      console.error("Erro ao excluir serviço:", error);
+      alert("Erro ao excluir serviço: " + error.message);
+      setExcluindo(false);
+      return;
+    }
+
+    navigate("/servicos");
+  }
+
   const clienteTemWhats = temWhatsApp(cliente?.telefone);
   const nomeVeiculo = veiculo ? `${veiculo.marca} ${veiculo.modelo}` : "";
 
@@ -189,6 +216,11 @@ function ServicoDetalhePage() {
           </p>
         </div>
         <div className="cliente-detalhe-top-actions">
+          {!isNovo && (
+            <button type="button" className="btn-excluir" onClick={excluirServico} disabled={excluindo}>
+              {excluindo ? "Excluindo..." : "Excluir serviço"}
+            </button>
+          )}
           <button type="button" className="btn-secundario-ativo" onClick={() => navigate("/servicos")}>
             Voltar
           </button>
