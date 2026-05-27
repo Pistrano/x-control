@@ -45,6 +45,10 @@ const usuariosSistema = {
     nome: "Joao",
     funcao: "Administrador",
   },
+   "gustavodbianco1@gmail.com": {
+    nome: "Gustavo",
+    funcao: "Administrador",
+  },
 };
 
 function obterUsuarioSistema(user) {
