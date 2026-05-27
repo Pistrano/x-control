@@ -39,11 +39,11 @@ const usuariosSistema = {
   },
   "marianadelmax@gmail.com": {
     nome: "Mariana",
-    funcao: "Financeiro",
+    funcao: "Administrador",
   },
   "jpfpanzini@gmail.com": {
     nome: "Joao",
-    funcao: "Operacional",
+    funcao: "Administrador",
   },
 };
 
