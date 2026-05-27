@@ -80,9 +80,35 @@ function App() {
 
         <section className="conteudo">
           <div className="topbar-sistema">
-            <span>
-              {sessao.user?.email}
-            </span>
+            <span
+  style={{
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-end",
+    gap: "2px",
+  }}
+>
+  <strong>
+    {sessao.user?.email ===
+    "raphacapistrano09@gmail.com"
+      ? "Raphael"
+      : sessao.user?.email ===
+        "marianadelmax@gmail.com"
+      ? "Mariana"
+      : sessao.user?.email ===
+        "jpfpanzini@gmail.com"
+      ? "João"
+      : "Usuário"}
+  </strong>
+
+  <small
+    style={{
+      color: "#999",
+    }}
+  >
+    Administrador
+  </small>
+</span>
 
             <button
               type="button"
