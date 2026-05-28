@@ -41,11 +41,11 @@ function DashboardPage() {
         supabase.from("estoque").select("*"),
       ]);
 
-    if (!clientesRes.error) setClientes(clientesRes.data || []);
-    if (!veiculosRes.error) setVeiculos(veiculosRes.data || []);
-    if (!servicosRes.error) setServicos(servicosRes.data || []);
-    if (!custosRes.error) setCustos(custosRes.data || []);
-    if (!estoqueRes.error) setEstoque(estoqueRes.data || []);
+    if (clientesRes.error) console.error("Erro clientes:", clientesRes.error); else setClientes(clientesRes.data || []);
+    if (veiculosRes.error) console.error("Erro veiculos:", veiculosRes.error); else setVeiculos(veiculosRes.data || []);
+    if (servicosRes.error) console.error("Erro servicos:", servicosRes.error); else setServicos(servicosRes.data || []);
+    if (custosRes.error) console.error("Erro custos:", custosRes.error); else setCustos(custosRes.data || []);
+    if (estoqueRes.error) console.error("Erro estoque:", estoqueRes.error); else setEstoque(estoqueRes.data || []);
 
     setUltimaAtualizacao(new Date().toLocaleTimeString("pt-BR"));
     setCarregando(false);
