@@ -2050,4 +2050,59 @@ h1,
   box-shadow:
     0 0 18px
     rgba(229,57,53,.18);
+}.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* botão menu mobile */
+.menu-mobile-btn {
+  display: none;
+  position: fixed;
+  top: 18px;
+  left: 18px;
+  z-index: 2000;
+  background: #111;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+/* overlay escuro */
+.sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 998;
+}
+
+/* mobile */
+@media (max-width: 768px) {
+
+  .menu-mobile-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: -280px;
+    height: 100vh;
+    z-index: 999;
+    transition: 0.3s ease;
+  }
+
+  .sidebar.open {
+    left: 0;
+  }
+
+  .conteudo {
+    width: 100%;
+    margin-left: 0 !important;
+  }
 }

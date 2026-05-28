@@ -8,6 +8,7 @@ function EditarItemEstoquePage() {
 
   const [carregando, setCarregando] = useState(true);
   const [salvando, setSalvando] = useState(false);
+  const [quantidadeOriginal, setQuantidadeOriginal] = useState(0);
 
   const [form, setForm] = useState({
     categoria: "tintas",
@@ -44,13 +45,16 @@ function EditarItemEstoquePage() {
       return;
     }
 
+    const qtd = Number(data.quantidade ?? 0);
+    setQuantidadeOriginal(qtd);
+
     setForm({
       categoria: data.categoria || "tintas",
       nome: data.nome || "",
       codigo: data.codigo || "",
       marca: data.marca || "",
       fornecedor: data.fornecedor || "",
-      quantidade: data.quantidade ?? "",
+      quantidade: qtd,
       unidade: data.unidade || "un",
       estoqueMinimo: data.estoque_minimo ?? "",
       valorUnitario: data.valor_unitario ?? "",
@@ -65,16 +69,11 @@ function EditarItemEstoquePage() {
 
   function handleChange(e) {
     const { name, value } = e.target;
-
-    setForm((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setForm((prev) => ({ ...prev, [name]: value }));
   }
 
   function handleArquivo(e) {
     const file = e.target.files?.[0];
-
     setForm((prev) => ({
       ...prev,
       anexoNome: file ? file.name : prev.anexoNome,
@@ -91,13 +90,16 @@ function EditarItemEstoquePage() {
 
     setSalvando(true);
 
+    const novaQuantidade = Number(form.quantidade || 0);
+    const delta = novaQuantidade - quantidadeOriginal;
+
     const payload = {
       categoria: form.categoria,
       nome: form.nome.trim(),
       codigo: form.codigo.trim(),
       marca: form.marca.trim(),
       fornecedor: form.fornecedor.trim(),
-      quantidade: Number(form.quantidade || 0),
+      quantidade: novaQuantidade,
       unidade: form.unidade,
       estoque_minimo: Number(form.estoqueMinimo || 0),
       valor_unitario: Number(form.valorUnitario || 0),
@@ -116,6 +118,29 @@ function EditarItemEstoquePage() {
       alert("Erro ao salvar edição: " + error.message);
       setSalvando(false);
       return;
+    }
+
+    // Registra movimentação se a quantidade mudou
+    if (delta !== 0) {
+      const { data: userData } = await supabase.auth.getUser();
+      const user = userData?.user;
+      const responsavel =
+        user?.user_metadata?.nome ||
+        user?.user_metadata?.name ||
+        user?.email ||
+        "Usuário";
+
+      await supabase.from("movimentacoes_estoque").insert([
+        {
+          item_estoque_id: id,
+          tipo_movimentacao: delta > 0 ? "ajuste entrada" : "ajuste saída",
+          quantidade: Math.abs(delta),
+          valor_unitario: Number(form.valorUnitario || 0),
+          data: new Date().toISOString().slice(0, 10),
+          observacao: "Ajuste manual pela tela de edição",
+          responsavel,
+        },
+      ]);
     }
 
     setSalvando(false);
@@ -188,7 +213,19 @@ function EditarItemEstoquePage() {
 
           <div className="form-group">
             <label>Quantidade</label>
-            <input type="number" name="quantidade" value={form.quantidade} onChange={handleChange} />
+            <input
+              type="number"
+              name="quantidade"
+              value={form.quantidade}
+              onChange={handleChange}
+            />
+            {Number(form.quantidade) !== quantidadeOriginal && (
+              <small style={{ color: "#f59e0b", marginTop: 4, display: "block" }}>
+                {Number(form.quantidade) > quantidadeOriginal
+                  ? `+${Number(form.quantidade) - quantidadeOriginal} será registrado como ajuste entrada`
+                  : `${Number(form.quantidade) - quantidadeOriginal} será registrado como ajuste saída`}
+              </small>
+            )}
           </div>
 
           <div className="form-group">

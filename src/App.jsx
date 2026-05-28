@@ -32,56 +32,34 @@ import RelatorioFinanceiroPage from "./pages/RelatorioFinanceiroPage";
 import RelatorioEstoquePage from "./pages/RelatorioEstoquePage";
 import RelatorioServicosPage from "./pages/RelatorioServicosPage";
 
-const usuariosSistema = {
-  "raphacapistrano09@gmail.com": {
-    nome: "Raphael",
-    funcao: "Administrador",
-  },
-  "marianadelmax@gmail.com": {
-    nome: "Mariana",
-    funcao: "Administrador",
-  },
-  "jpfpanzini@gmail.com": {
-    nome: "Joao",
-    funcao: "Administrador",
-  },
-   "gustavodbianco1@gmail.com": {
-    nome: "Gustavo",
-    funcao: "Administrador",
-  },
-};
-
-function obterUsuarioSistema(user) {
-  const email = user?.email || "";
-  const cadastrado = usuariosSistema[email];
-
-  if (cadastrado) {
-    return { ...cadastrado, email };
-  }
-
-  return {
-    nome: user?.user_metadata?.nome || user?.user_metadata?.name || email.split("@")[0] || "Usuario",
-    funcao: "Usuario",
-    email,
-  };
-}
-
 function App() {
   const [sessao, setSessao] = useState(null);
+  const [usuarioAtual, setUsuarioAtual] = useState(null);
   const [carregando, setCarregando] = useState(true);
 
   useEffect(() => {
     async function verificarSessao() {
       const { data } = await supabase.auth.getSession();
       setSessao(data.session);
+
+      if (data.session?.user) {
+        await carregarPerfil(data.session.user);
+      }
+
       setCarregando(false);
     }
 
     verificarSessao();
 
     const { data: authListener } = supabase.auth.onAuthStateChange(
-      (_event, session) => {
+      async (_event, session) => {
         setSessao(session);
+
+        if (session?.user) {
+          await carregarPerfil(session.user);
+        } else {
+          setUsuarioAtual(null);
+        }
       }
     );
 
@@ -89,6 +67,34 @@ function App() {
       authListener.subscription.unsubscribe();
     };
   }, []);
+
+  async function carregarPerfil(user) {
+    const { data, error } = await supabase
+      .from("perfis")
+      .select("nome, funcao")
+      .eq("email", user.email)
+      .single();
+
+    if (error || !data) {
+      // Fallback: usa dados do próprio auth se não tiver perfil cadastrado
+      setUsuarioAtual({
+        nome:
+          user.user_metadata?.nome ||
+          user.user_metadata?.name ||
+          user.email.split("@")[0] ||
+          "Usuário",
+        funcao: "Usuário",
+        email: user.email,
+      });
+      return;
+    }
+
+    setUsuarioAtual({
+      nome: data.nome,
+      funcao: data.funcao,
+      email: user.email,
+    });
+  }
 
   async function sair() {
     await supabase.auth.signOut();
@@ -106,8 +112,6 @@ function App() {
     return <LoginPage />;
   }
 
-  const usuarioAtual = obterUsuarioSistema(sessao.user);
-
   return (
     <BrowserRouter>
       <main className="layout">
@@ -119,8 +123,8 @@ function App() {
               <span className="usuario-status" aria-label="Online" title="Online" />
 
               <div className="usuario-topbar-texto">
-                <strong>{usuarioAtual.nome}</strong>
-                <span>{usuarioAtual.funcao}</span>
+                <strong>{usuarioAtual?.nome}</strong>
+                <span>{usuarioAtual?.funcao}</span>
               </div>
             </div>
 

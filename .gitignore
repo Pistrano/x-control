@@ -23,3 +23,8 @@ dist-ssr
 *.sln
 *.sw?
 .vercel
+
+# Variáveis de ambiente — nunca commitar
+.env
+.env.local
+.env.*.local
