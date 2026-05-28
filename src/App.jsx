@@ -69,6 +69,7 @@ function App() {
   }, []);
 
   async function carregarPerfil(user) {
+  try {
     const { data, error } = await supabase
       .from("perfis")
       .select("nome, funcao")
@@ -76,37 +77,62 @@ function App() {
       .single();
 
     if (error || !data) {
-      // Fallback: usa dados do próprio auth se não tiver perfil cadastrado
+      console.log("Perfil não encontrado, usando fallback");
+
       setUsuarioAtual({
         nome:
           user.user_metadata?.nome ||
           user.user_metadata?.name ||
-          user.email.split("@")[0] ||
+          user.email?.split("@")[0] ||
           "Usuário",
         funcao: "Usuário",
         email: user.email,
       });
+
       return;
     }
 
     setUsuarioAtual({
-      nome: data.nome,
-      funcao: data.funcao,
+      nome: data.nome || "Usuário",
+      funcao: data.funcao || "Usuário",
+      email: user.email,
+    });
+
+  } catch (err) {
+    console.error("Erro ao carregar perfil:", err);
+
+    setUsuarioAtual({
+      nome: "Usuário",
+      funcao: "Usuário",
       email: user.email,
     });
   }
+}
 
   async function sair() {
     await supabase.auth.signOut();
   }
 
   if (carregando) {
-    return (
-      <div style={{ color: "#fff", padding: 40 }}>
-        <h1>Carregando X-Control...</h1>
-      </div>
-    );
-  }
+  return (
+    <div style={{ color: "#fff", padding: 40 }}>
+      <h1>Carregando X-Control...</h1>
+
+      <button
+        onClick={() => {
+          setCarregando(false);
+        }}
+        style={{
+          marginTop: "20px",
+          padding: "10px 20px",
+          cursor: "pointer"
+        }}
+      >
+        Entrar mesmo assim
+      </button>
+    </div>
+  );
+}
 
   if (!sessao) {
     return <LoginPage />;
