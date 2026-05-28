@@ -114,23 +114,154 @@ function DashboardPage() {
     const semEstoqueLista = estoque.filter(
       (item) => Number(item.quantidade || 0) <= 0
     );
+const funcionariosRanking = {};
+
+servicosFinalizados.forEach((servico) => {
+  const funcionario =
+    servico.funileiro_responsavel?.trim();
+
+  if (!funcionario) return;
+
+  funcionariosRanking[funcionario] =
+    (funcionariosRanking[funcionario] || 0) + 1;
+});
+
+const funcionarioDestaque =
+  Object.entries(funcionariosRanking)
+    .sort((a, b) => b[1] - a[1])[0];
+
+const percentualCustos =
+  faturamentoMes > 0
+    ? (custosMesTotal / faturamentoMes) * 100
+    : 0;
+
+const insights = [];
+
+if (estoqueBaixoLista.length > 0) {
+  insights.push({
+    titulo: "Estoque crítico",
+    descricao: `${estoqueBaixoLista.length} itens precisam de atenção`,
+    tipo: "alerta",
+  });
+}
+
+if (percentualCustos > 55) {
+  insights.push({
+    titulo: "Custos elevados",
+    descricao: `Custos consomem ${Math.round(percentualCustos)}% do faturamento`,
+    tipo: "financeiro",
+  });
+}
+
+if (funcionarioDestaque) {
+  insights.push({
+    titulo: "Funcionário destaque",
+    descricao: `${funcionarioDestaque[0]} concluiu ${funcionarioDestaque[1]} serviços`,
+    tipo: "destaque",
+  });
+}
+
+if (lucroLiquidoMes > 0) {
+  insights.push({
+    titulo: "Lucro positivo",
+    descricao: `${formatarMoeda(lucroLiquidoMes)} líquidos este mês`,
+    tipo: "positivo",
+  });
+}
+
+const hojeTexto =
+  new Date().toISOString().slice(0, 10);
+
+const amanha = new Date();
+amanha.setDate(
+  amanha.getDate() + 1
+);
+
+const amanhaTexto =
+  amanha.toISOString().slice(0, 10);
+
+const entregasHoje =
+  servicos
+    .filter((servico) => {
+      return (
+        servico.previsao_entrega ===
+          hojeTexto &&
+        servico.encerrado !== true
+      );
+    })
+    .slice(0, 5);
+
+const entregasAmanha =
+  servicos.filter((servico) => {
+    return (
+      servico.previsao_entrega ===
+        amanhaTexto &&
+      servico.encerrado !== true
+    );
+  });
+
+const atrasados =
+  servicos
+    .filter((servico) => {
+      return (
+        servico.previsao_entrega &&
+        servico.previsao_entrega <
+          hojeTexto &&
+        servico.encerrado !== true
+      );
+    })
+    .slice(0, 5);
+
+const servicosUrgentes =
+  servicos.filter(
+    (servico) =>
+      servico.prioridade ===
+        "Urgente" &&
+      servico.encerrado !== true
+  );
 
     return {
-      totalClientes: clientes.length,
-      totalVeiculos: veiculos.length,
-      servicosAtivos: servicosAtivos.length,
-      servicosFinalizados: servicosFinalizados.length,
-      faturamentoMes,
-      custosMesTotal,
-      lucroEstimado: lucroLiquidoMes - custosMesTotal,
-      valorEstoque,
-      estoqueBaixo: estoqueBaixoLista.length,
-      semEstoque: semEstoqueLista.length,
-      itensCriticos: [...semEstoqueLista, ...estoqueBaixoLista].slice(0, 5),
-      servicosRecentes: [...servicos]
-        .sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0))
-        .slice(0, 5),
-    };
+  totalClientes: clientes.length,
+  totalVeiculos: veiculos.length,
+  servicosAtivos: servicosAtivos.length,
+  servicosFinalizados:
+    servicosFinalizados.length,
+
+    entregasHoje,
+entregasAmanha,
+atrasados,
+
+  faturamentoMes,
+  custosMesTotal,
+
+  lucroEstimado:
+    lucroLiquidoMes - custosMesTotal,
+
+  valorEstoque,
+
+  estoqueBaixo:
+    estoqueBaixoLista.length,
+
+  semEstoque:
+    semEstoqueLista.length,
+
+  itensCriticos: [
+    ...semEstoqueLista,
+    ...estoqueBaixoLista
+  ].slice(0, 5),
+
+  servicosRecentes: [...servicos]
+    .sort(
+      (a, b) =>
+        new Date(b.created_at || 0) -
+        new Date(a.created_at || 0)
+    )
+    .slice(0, 5),
+
+  insights,
+  funcionarioDestaque,
+  servicosUrgentes,
+};
   }, [clientes, veiculos, servicos, custos, estoque, mesAtual]);
 
   const maiorValorGrafico = Math.max(
@@ -215,10 +346,266 @@ function DashboardPage() {
           </div>
         ))}
       </div>
+{resumo.servicosUrgentes
+  .length > 0 && (
+  <div
+    style={{
+      background:
+        "rgba(255,92,92,.08)",
 
-      <div className="clientes-lista-header" style={{ marginTop: 34 }}>
-        <h2 className="clientes-secao-titulo">Alertas do estoque</h2>
+      border:
+        "1px solid rgba(255,92,92,.18)",
+
+      borderRadius: 18,
+      padding: "18px 22px",
+      marginTop: 28,
+      marginBottom: 16,
+    }}
+  >
+    <strong
+      style={{
+        color: "#ff8a8a",
+        fontSize: 16,
+      }}
+    >
+      ⚠️ Serviços urgentes
+    </strong>
+
+    <p
+      style={{
+        marginTop: 8,
+        color: "#c7ccd2",
+      }}
+    >
+      Existem{" "}
+      <strong>
+        {
+          resumo
+            .servicosUrgentes
+            .length
+        }
+      </strong>{" "}
+      serviços urgentes
+      aguardando atenção.
+    </p>
+  </div>
+)}
+      <section style={{ marginTop: 34 }}>
+  <h2
+    className="clientes-secao-titulo"
+    style={{ marginBottom: 18 }}
+  >
+    Insights do sistema
+  </h2>
+
+  <div className="insights-grid">
+    {resumo.insights.length === 0 ? (
+      <div className="cliente-link-card">
+        <h3>Tudo saudável</h3>
+        <p>
+          Nenhum insight importante
+          encontrado.
+        </p>
       </div>
+    ) : (
+      resumo.insights.map(
+        (insight, index) => (
+          <div
+            key={index}
+            className="cliente-link-card"
+          >
+            <div className="cliente-lista-item-topo">
+              <h3>
+                {insight.titulo}
+              </h3>
+
+              <span>
+                {insight.tipo ===
+                "destaque"
+                  ? "🏆"
+                  : insight.tipo ===
+                    "financeiro"
+                  ? "💸"
+                  : insight.tipo ===
+                    "positivo"
+                  ? "📈"
+                  : "⚠️"}
+              </span>
+            </div>
+
+            <p>
+              {insight.descricao}
+            </p>
+          </div>
+        )
+      )
+    )}
+  </div>
+</section>
+
+<section
+  style={{
+    marginTop: 34,
+    width: "100%",
+  }}
+>
+  <h2
+    className="clientes-secao-titulo"
+    style={{ marginBottom: 18 }}
+  >
+    Agenda inteligente
+  </h2>
+
+  <div className="insights-grid">
+    <div className="cliente-link-card">
+      <div
+        className="cliente-lista-item-topo"
+      >
+        <h3>
+          🚗 Entregas hoje
+        </h3>
+
+        <span>
+          {
+            resumo.entregasHoje
+              .length
+          }
+        </span>
+      </div>
+
+      {resumo.entregasHoje
+        .length === 0 ? (
+        <p>
+          Nenhuma entrega
+          prevista hoje.
+        </p>
+      ) : (
+        resumo.entregasHoje.map(
+          (servico) => (
+            <div
+              key={servico.id}
+              style={{
+                marginTop: 12,
+                paddingTop: 12,
+                borderTop:
+                  "1px solid rgba(255,255,255,.06)",
+              }}
+            >
+              <strong>
+                {servico.descricao ||
+                  "Serviço"}
+              </strong>
+
+              <p
+                style={{
+                  marginTop: 4,
+                  color: "#9ba3af",
+                  fontSize: 13,
+                }}
+              >
+                Previsto:
+                {" "}
+                {formatarData(
+                  servico.previsao_entrega
+                )}
+              </p>
+            </div>
+          )
+        )
+      )}
+    </div>
+
+    <div className="cliente-link-card">
+      <div
+        className="cliente-lista-item-topo"
+      >
+        <h3>
+          ⚠️ Atrasados
+        </h3>
+
+        <span>
+          {
+            resumo.atrasados
+              .length
+          }
+        </span>
+      </div>
+
+      {resumo.atrasados
+        .length === 0 ? (
+        <p>
+          Nenhum serviço
+          atrasado.
+        </p>
+      ) : (
+        resumo.atrasados.map(
+          (servico) => (
+            <div
+              key={servico.id}
+              style={{
+                marginTop: 12,
+                paddingTop: 12,
+                borderTop:
+                  "1px solid rgba(255,255,255,.06)",
+              }}
+            >
+              <strong>
+                {servico.descricao ||
+                  "Serviço"}
+              </strong>
+
+              <p
+                style={{
+                  marginTop: 4,
+                  color:
+                    "#ff8787",
+                  fontSize: 13,
+                }}
+              >
+                Prazo:
+                {" "}
+                {formatarData(
+                  servico.previsao_entrega
+                )}
+              </p>
+            </div>
+          )
+        )
+      )}
+    </div>
+
+    <div className="cliente-link-card">
+      <h3>
+        🕒 Amanhã
+      </h3>
+
+      <strong
+        style={{
+          fontSize: "2rem",
+        }}
+      >
+        {
+          resumo.entregasAmanha
+            .length
+        }
+      </strong>
+
+      <p>
+        entregas previstas
+        amanhã
+      </p>
+    </div>
+  </div>
+</section>
+
+<div
+  className="clientes-lista-header"
+  style={{ marginTop: 34 }}
+>
+  <h2 className="clientes-secao-titulo">
+    Alertas do estoque
+  </h2>
+</div>
 
       <div className="clientes-grid-horizontal" style={{ marginTop: 14 }}>
         {resumo.itensCriticos.length === 0 ? (

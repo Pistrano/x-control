@@ -34,6 +34,8 @@ function LoginPage() {
 
   return (
     <div className="login-page">
+      <div className="login-background-glow"></div>
+
       <div className="login-card">
         <div className="login-logo-box">
           <img
@@ -43,38 +45,50 @@ function LoginPage() {
           />
         </div>
 
-        <h1>X-Control</h1>
-        <p>Gestão interna da X Motors</p>
+        <div className="login-header">
+          <h1>X-Control</h1>
+          <p>Gestão interna da X Motors</p>
+        </div>
 
         <form
           onSubmit={handleSubmit}
           className="login-form"
         >
-          <input
-            type="email"
-            placeholder="E-mail"
-            value={email}
-            onChange={(e) =>
-              setEmail(e.target.value)
-            }
-          />
+          <div className="input-group">
+            <input
+              type="email"
+              placeholder="E-mail"
+              value={email}
+              onChange={(e) =>
+                setEmail(e.target.value)
+              }
+            />
+          </div>
 
-          <input
-            type="password"
-            placeholder="Senha"
-            value={senha}
-            onChange={(e) =>
-              setSenha(e.target.value)
-            }
-          />
+          <div className="input-group">
+            <input
+              type="password"
+              placeholder="Senha"
+              value={senha}
+              onChange={(e) =>
+                setSenha(e.target.value)
+              }
+            />
+          </div>
 
           <button
             type="submit"
             disabled={carregando}
+            className={carregando ? "loading" : ""}
           >
-            {carregando
-              ? "Entrando..."
-              : "Entrar no sistema"}
+            {carregando ? (
+              <>
+                <span className="spinner"></span>
+                Entrando...
+              </>
+            ) : (
+              "Entrar no sistema"
+            )}
           </button>
         </form>
       </div>

@@ -252,36 +252,82 @@ function ServicosPage() {
                   boxShadow: "0 4px 14px rgba(0,0,0,0.14)",
                 }}
               >
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "flex-start",
-                    gap: "8px",
-                    marginBottom: "8px",
-                  }}
-                >
-                  <h3
-                    style={{
-                      margin: 0,
-                      fontSize: "15px",
-                      lineHeight: 1.25,
-                      color: "#ffffff",
-                    }}
-                  >
-                    {servico.clienteNome || "Cliente sem nome"}
-                  </h3>
+               <div
+  style={{
+    display: "flex",
+    justifyContent:
+      "space-between",
+    alignItems: "center",
+    marginBottom: 14,
+    gap: 12,
+  }}
+>
+  <div
+    style={{
+      display: "flex",
+      alignItems: "center",
+      gap: 10,
+      minWidth: 0,
+    }}
+  >
+    <div
+      title={
+        servico.prioridade
+      }
+      style={{
+        width: 10,
+        height: 10,
+        borderRadius: "50%",
+        flexShrink: 0,
 
-                  <span
-                    className={`status-badge ${classeStatusServico(classeStatus)}`}
-                    style={{
-                      fontSize: "11px",
-                      whiteSpace: "nowrap",
-                    }}
-                  >
-                    {textoStatusServico(servico)}
-                  </span>
-                </div>
+        background:
+          servico.prioridade ===
+          "Urgente"
+            ? "#ff5c5c"
+            : servico.prioridade ===
+              "Média"
+            ? "#ffc107"
+            : "#4caf50",
+
+        boxShadow:
+          servico.prioridade ===
+          "Urgente"
+            ? "0 0 8px rgba(255,92,92,.45)"
+            : servico.prioridade ===
+              "Média"
+            ? "0 0 8px rgba(255,193,7,.35)"
+            : "0 0 8px rgba(76,175,80,.35)",
+      }}
+    />
+
+    <h3
+      style={{
+        margin: 0,
+        fontSize: "16px",
+      }}
+    >
+      {servico.clienteNome ||
+        "Cliente sem nome"}
+    </h3>
+  </div>
+
+  <span
+    className={`status-badge ${classeStatusServico(
+      classeStatus
+    )}`}
+    style={{
+      flexShrink: 0,
+      whiteSpace:
+        "nowrap",
+    }}
+  >
+    {textoStatusServico(
+      servico
+    )}
+  </span>
+</div>
+
+  
 
                 <p
                   style={{
@@ -474,16 +520,119 @@ function ServicosPage() {
                         </span>
                       </div>
 
-                      <p
-                        style={{
-                          margin: "0 0 6px 0",
-                          fontSize: "13px",
-                          color: "#cfcfcf",
-                          lineHeight: 1.35,
-                        }}
-                      >
-                        {servico.descricao || "Serviço sem descrição"}
-                      </p>
+                      <div
+  style={{
+    display: "flex",
+    flexDirection: "column",
+    gap: 10,
+  }}
+>
+  <div
+    style={{
+      display: "flex",
+      justifyContent:
+        "space-between",
+      alignItems: "flex-start",
+      gap: 12,
+    }}
+  >
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: 8,
+        flex: 1,
+      }}
+    >
+      <h3
+        style={{
+          margin: 0,
+          fontSize: "15px",
+          lineHeight: 1.25,
+          color: "#ffffff",
+        }}
+      >
+        {servico.clienteNome ||
+          "Cliente sem nome"}
+      </h3>
+
+      <div
+        style={{
+          display: "inline-flex",
+          alignItems: "center",
+          width: "fit-content",
+          padding: "6px 12px",
+          borderRadius: 999,
+          fontSize: 11,
+          fontWeight: 700,
+
+          background:
+            servico.prioridade ===
+            "Urgente"
+              ? "rgba(255,92,92,.12)"
+              : servico.prioridade ===
+                "Média"
+              ? "rgba(255,193,7,.12)"
+              : "rgba(76,175,80,.10)",
+
+          color:
+            servico.prioridade ===
+            "Urgente"
+              ? "#ff8a8a"
+              : servico.prioridade ===
+                "Média"
+              ? "#ffd54f"
+              : "#8dd89d",
+
+          border:
+            servico.prioridade ===
+            "Urgente"
+              ? "1px solid rgba(255,92,92,.18)"
+              : servico.prioridade ===
+                "Média"
+              ? "1px solid rgba(255,193,7,.16)"
+              : "1px solid rgba(76,175,80,.16)",
+        }}
+      >
+        {servico.prioridade ===
+        "Urgente"
+          ? "Urgente"
+          : servico.prioridade ===
+            "Média"
+          ? "Média"
+          : "Normal"}
+      </div>
+    </div>
+
+    <span
+      className={`status-badge ${classeStatusServico(
+        classeStatus
+      )}`}
+      style={{
+        fontSize: "11px",
+        whiteSpace:
+          "nowrap",
+        flexShrink: 0,
+      }}
+    >
+      {textoStatusServico(
+        servico
+      )}
+    </span>
+  </div>
+
+  <p
+    style={{
+      margin: 0,
+      fontSize: "13px",
+      color: "#cfcfcf",
+      lineHeight: 1.35,
+    }}
+  >
+    {servico.descricao ||
+      "Serviço sem descrição"}
+  </p>
+</div>
 
                       <small
                         style={{

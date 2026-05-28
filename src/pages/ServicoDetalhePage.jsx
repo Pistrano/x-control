@@ -22,6 +22,7 @@ function ServicoDetalhePage() {
   const [form, setForm] = useState({
     descricao: "",
     status: "Aguardando",
+    prioridade: "Normal",
     statusPagamento: "",
     tipoPagamento: "",
     funiRespOnsavel: "",
@@ -30,6 +31,7 @@ function ServicoDetalhePage() {
     comissao: "",
     valorLiquido: "",
     dataEntrada: "",
+    previsaoEntrega: "",
     dataSaida: "",
     observacoes: "",
     encerrado: false,
@@ -62,6 +64,7 @@ function ServicoDetalhePage() {
         setForm({
           descricao: data.descricao || "",
           status: data.status || "Aguardando",
+          prioridade: data.prioridade || "Normal",
           statusPagamento: data.status_pagamento || "",
           tipoPagamento: data.tipo_pagamento || "",
           funiRespOnsavel: data.funileiro_responsavel || "",
@@ -69,8 +72,14 @@ function ServicoDetalhePage() {
           valorGasto: data.valor_gasto || "",
           comissao: data.comissao || "",
           valorLiquido: data.valor_liquido || "",
-          dataEntrada: data.data_entrada || "",
-          dataSaida: data.data_saida || "",
+          dataEntrada:
+  data.data_entrada || "",
+
+previsaoEntrega:
+  data.previsao_entrega || "",
+
+dataSaida:
+  data.data_saida || "",
           observacoes: data.observacoes || "",
           encerrado: data.encerrado || false,
           ehLavagem: data.eh_lavagem || false,
@@ -137,6 +146,7 @@ function ServicoDetalhePage() {
       veiculo_id: veiculoId,
       tipo_servico: form.ehLavagem ? "Lavagem" : "Serviço",
       descricao: form.descricao,
+      prioridade: form.prioridade,
       status: estaEncerrado ? "Finalizado" : form.status,
       status_pagamento: form.statusPagamento,
       tipo_pagamento: form.tipoPagamento,
@@ -146,8 +156,13 @@ function ServicoDetalhePage() {
       valor_gasto: Number(form.valorGasto || 0),
       comissao: Number(form.comissao || 0),
       valor_liquido: Number(form.valorLiquido || 0),
-      data_entrada: form.dataEntrada || null,
-      data_saida: estaEncerrado ? (form.dataSaida || new Date().toISOString().slice(0, 10)) : null,
+      data_entrada:
+  form.dataEntrada || null,
+
+previsao_entrega:
+  form.previsaoEntrega || null,
+
+data_saida: estaEncerrado ? (form.dataSaida || new Date().toISOString().slice(0, 10)) : null,
       observacoes: form.observacoes,
       encerrado: estaEncerrado,
       eh_lavagem: form.ehLavagem,
@@ -256,6 +271,27 @@ function ServicoDetalhePage() {
               <option value="Finalizado">Finalizado</option>
               <option value="Entregue">Entregue</option>
             </select>
+            <div className="form-group">
+  <label>Prioridade</label>
+
+  <select
+    name="prioridade"
+    value={form.prioridade}
+    onChange={handleChange}
+  >
+    <option value="Urgente">
+      🔴 Urgente
+    </option>
+
+    <option value="Média">
+      🟡 Média
+    </option>
+
+    <option value="Normal">
+      🟢 Normal
+    </option>
+  </select>
+</div>
           </div>
 
           <div className="form-group">
@@ -313,6 +349,17 @@ function ServicoDetalhePage() {
             <label>Data de entrada</label>
             <input type="date" name="dataEntrada" value={form.dataEntrada} onChange={handleChange} />
           </div>
+
+          <div className="form-group">
+  <label>Previsão de entrega</label>
+
+  <input
+    type="date"
+    name="previsaoEntrega"
+    value={form.previsaoEntrega}
+    onChange={handleChange}
+  />
+</div>
 
           <div className="form-group">
             <label>Data de saída</label>

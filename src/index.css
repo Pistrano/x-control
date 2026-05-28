@@ -2105,4 +2105,510 @@ h1,
     width: 100%;
     margin-left: 0 !important;
   }
+}/* LOGIN PREMIUM */
+
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(circle at top, rgba(180, 0, 0, 0.15), transparent 35%),
+    #0b0b0d;
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.login-background-glow {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background: rgba(255, 0, 0, 0.08);
+  filter: blur(120px);
+  border-radius: 50%;
+  top: -120px;
+  right: -120px;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 430px;
+  background: rgba(22, 22, 24, 0.88);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 32px;
+  padding: 42px;
+  box-shadow:
+    0 25px 60px rgba(0,0,0,0.45),
+    inset 0 1px 0 rgba(255,255,255,0.04);
+  text-align: center;
+  z-index: 2;
+  animation: fadeUp 0.7s ease;
+}
+
+.login-logo-box {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 22px;
+}
+
+.login-logo {
+  width: 92px;
+  height: 92px;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 30px rgba(255,0,0,0.25));
+  transition: transform 0.3s ease;
+}
+
+.login-logo:hover {
+  transform: scale(1.04);
+}
+
+.login-header h1 {
+  color: white;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  letter-spacing: -0.5px;
+}
+
+.login-header p {
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 28px;
+  font-size: 0.95rem;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 18px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.04);
+  color: white;
+  outline: none;
+  font-size: 0.95rem;
+  transition: all 0.25s ease;
+  box-sizing: border-box;
+}
+
+.input-group input::placeholder {
+  color: rgba(255,255,255,0.35);
+}
+
+.input-group input:focus {
+  border-color: rgba(255, 40, 40, 0.5);
+  background: rgba(255,255,255,0.06);
+  box-shadow: 0 0 0 4px rgba(255,0,0,0.08);
+}
+
+.login-form button {
+  height: 58px;
+  border: none;
+  border-radius: 18px;
+  background: linear-gradient(
+    135deg,
+    #b30000,
+    #ff1e1e
+  );
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.login-form button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(255,0,0,0.25);
+}
+
+.login-form button:active {
+  transform: scale(0.98);
+}
+
+.login-form button:disabled {
+  opacity: 0.85;
+  cursor: not-allowed;
+}
+
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255,255,255,0.25);
+  border-top: 2px solid white;
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}/* =========================
+   DASHBOARD PREMIUM V2
+========================= */
+
+.cliente-dados-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px !important;
+  margin-top: 28px !important;
+}
+
+.cliente-dado-box {
+  position: relative;
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(28, 30, 35, 0.95),
+      rgba(20, 22, 26, 0.96)
+    ) !important;
+
+  border:
+    1px solid rgba(255,255,255,.05);
+
+  border-radius: 28px !important;
+
+  padding: 24px !important;
+
+  min-height: 145px;
+
+  backdrop-filter: blur(20px);
+
+  transition:
+    transform .25s ease,
+    box-shadow .25s ease,
+    border-color .25s ease;
+}
+
+.cliente-dado-box::before {
+  content: "";
+
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 3px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #ff2e2e,
+      #8f1111
+    );
+}
+
+.cliente-dado-box:hover {
+  transform:
+    translateY(-4px);
+
+  border-color:
+    rgba(229,57,53,.18);
+
+  box-shadow:
+    0 20px 45px rgba(0,0,0,.32),
+    0 0 40px rgba(229,57,53,.06);
+}
+
+.cliente-dado-label {
+  font-size: 13px !important;
+  color: #8e97a3 !important;
+  letter-spacing: .2px;
+}
+
+.cliente-dado-box strong {
+  font-size: 2rem !important;
+  font-weight: 800;
+  letter-spacing: -.04em;
+  color: #fff;
+  margin-top: 8px;
+}
+
+.cliente-dado-box small {
+  color: #8c949f !important;
+  margin-top: auto;
+  font-size: 13px !important;
+}
+
+/* dashboard respirar mais */
+.clientes-lista-header {
+  margin-top: 40px !important;
+}
+
+.clientes-secao-titulo {
+  font-size: 1.6rem !important;
+  letter-spacing: -.03em;
+}
+
+/* cards de estoque e serviços */
+.cliente-link-card {
+  border-radius: 28px !important;
+  padding: 22px !important;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(28,30,35,.96),
+      rgba(20,22,26,.96)
+    ) !important;
+
+  transition: .25s ease;
+}
+
+.cliente-link-card:hover {
+  transform:
+    translateY(-4px);
+
+  box-shadow:
+    0 20px 40px rgba(0,0,0,.25),
+    0 0 35px rgba(229,57,53,.05);
+}
+
+/* atalhos premium */
+.btn-principal,
+.btn-secundario-ativo {
+  min-height: 52px;
+  padding: 14px 18px !important;
+  border-radius: 18px !important;
+  font-weight: 700;
+}
+
+/* responsivo */
+@media (max-width: 1200px) {
+  .cliente-dados-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .cliente-dados-grid {
+    grid-template-columns: 1fr;
+  }
+}/* =========================
+   DASHBOARD PREMIUM V3
+   (SÓBRIO / CORPORATIVO)
+========================= */
+
+.cliente-dados-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px !important;
+  margin-top: 24px !important;
+}
+
+.cliente-dado-box {
+  position: relative;
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      180deg,
+      #171a1f 0%,
+      #14171b 100%
+    ) !important;
+
+  border:
+    1px solid rgba(255,255,255,.045);
+
+  border-radius: 18px !important;
+
+  padding: 22px !important;
+
+  min-height: 130px;
+
+  transition:
+    transform .18s ease,
+    border-color .18s ease,
+    box-shadow .18s ease;
+
+  box-shadow:
+    0 10px 24px rgba(0,0,0,.14);
+}
+
+/* detalhe premium discreto */
+.cliente-dado-box::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 22px;
+
+  width: 42px;
+  height: 2px;
+  border-radius: 999px;
+
+  background: #b71c1c;
+  opacity: .9;
+}
+
+.cliente-dado-box:hover {
+  transform: translateY(-2px);
+
+  border-color:
+    rgba(255,255,255,.08);
+
+  box-shadow:
+    0 18px 34px rgba(0,0,0,.18);
+}
+
+.cliente-dado-label {
+  color: #848d99 !important;
+  font-size: 12px !important;
+  font-weight: 600;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+}
+
+.cliente-dado-box strong {
+  margin-top: 8px;
+  font-size: 2.2rem !important;
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  color: #fff;
+}
+
+.cliente-dado-box small {
+  margin-top: auto;
+  color: #7f8894 !important;
+  font-size: 12px !important;
+}
+
+/* títulos mais premium */
+.clientes-secao-titulo {
+  font-size: 1.4rem !important;
+  font-weight: 750;
+  letter-spacing: -.03em;
+}
+
+/* cards internos */
+.cliente-link-card {
+  background:
+    linear-gradient(
+      180deg,
+      #171a1f 0%,
+      #14171b 100%
+    ) !important;
+
+  border:
+    1px solid rgba(255,255,255,.045);
+
+  border-radius: 18px !important;
+
+  padding: 20px !important;
+
+  box-shadow:
+    0 10px 24px rgba(0,0,0,.14);
+
+  transition:
+    transform .18s ease,
+    border-color .18s ease;
+}
+
+.cliente-link-card:hover {
+  transform: translateY(-2px);
+
+  border-color:
+    rgba(183,28,28,.18);
+
+  box-shadow:
+    0 18px 34px rgba(0,0,0,.18);
+}
+
+/* badges mais executivas */
+.cliente-lista-item-topo span {
+  background:
+    rgba(183,28,28,.10) !important;
+
+  border:
+    1px solid rgba(183,28,28,.14) !important;
+
+  color: #d9dde2 !important;
+
+  font-size: 10px !important;
+}
+
+/* financeiro mais limpo */
+.resumo-servico-card {
+  border-top: none !important;
+}
+
+/* atalhos */
+.btn-principal,
+.btn-secundario-ativo {
+  border-radius: 14px !important;
+  min-height: 48px;
+
+  box-shadow: none !important;
+}
+
+.btn-principal:hover,
+.btn-secundario-ativo:hover {
+  transform: translateY(-1px);
+}
+
+/* responsivo */
+@media (max-width: 1100px) {
+  .cliente-dados-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .cliente-dados-grid {
+    grid-template-columns: 1fr;
+  }
+}/* =========================
+   INSIGHTS DASHBOARD
+========================= */
+
+.insights-grid {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(320px, 1fr)
+  );
+  gap: 16px;
+  width: 100%;
+}
+
+.insights-grid .cliente-link-card {
+  min-height: 145px;
+}
+
+/* títulos alinhados */
+.clientes-lista-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start !important;
+}
+
+/* responsivo */
+@media (max-width: 768px) {
+  .insights-grid {
+    grid-template-columns: 1fr;
+  }
 }
