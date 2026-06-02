@@ -16,6 +16,16 @@ const MENSAGENS = {
     "finalizado": (nome, veiculo, placa) => `Olá ${nome}! ✅ A lavagem do seu *${veiculo}* (placa *${placa}*) foi *concluída*! Pode vir buscar quando quiser.`,
     "entregue":   (nome, veiculo, placa) => `Olá ${nome}! 🙏 Lavagem concluída e veículo entregue. Obrigado pela preferência na X Motors!`,
   },
+  orcamento: {
+    "envio":    (nome, veiculo, placa, valor, descricao, validade) =>
+      `Olá ${nome}! 📋 Segue o orçamento para o seu *${veiculo}* (placa *${placa}*):\n\n🔧 Serviço: ${descricao || "Serviço automotivo"}\n💰 Valor: *R$ ${Number(valor || 0).toFixed(2).replace(".", ",")}*\n⏳ Válido por ${validade || 7} dia(s)\n\nEntre em contato para confirmar ou tirar dúvidas. X Motors 🚗`,
+    "aprovado": (nome, veiculo, placa) =>
+      `Olá ${nome}! ✅ O orçamento do seu *${veiculo}* (placa *${placa}*) foi *aprovado*! Em breve entraremos em contato para agendar o serviço. 🔧`,
+    "recusado": (nome, veiculo, placa) =>
+      `Olá ${nome}! Entendemos que o orçamento do *${veiculo}* (placa *${placa}*) não foi aprovado desta vez. Qualquer dúvida, estamos à disposição. X Motors 🚗`,
+    "pendente": (nome, veiculo, placa) =>
+      `Olá ${nome}! 🕐 Seu orçamento para o *${veiculo}* (placa *${placa}*) ainda está disponível. Qualquer dúvida, é só chamar!`,
+  },
 };
 
 function formatarTelefone(telefone) {
@@ -25,7 +35,7 @@ function formatarTelefone(telefone) {
   return "55" + digits;
 }
 
-export function notificarWhatsApp({ telefone, tipo, status, nomeCliente, veiculo, placa }) {
+export function notificarWhatsApp({ telefone, tipo, status, nomeCliente, veiculo, placa, valor, descricao, validade }) {
   const numero = formatarTelefone(telefone);
   if (!numero) return false;
 
@@ -35,7 +45,10 @@ export function notificarWhatsApp({ telefone, tipo, status, nomeCliente, veiculo
   const texto = gerarMensagem(
     nomeCliente || "Cliente",
     veiculo || "veículo",
-    placa || "—"
+    placa || "—",
+    valor,
+    descricao,
+    validade
   );
 
   const url = `https://wa.me/${numero}?text=${encodeURIComponent(texto)}`;

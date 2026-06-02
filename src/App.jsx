@@ -26,6 +26,8 @@ import RelatorioFunileirosPage from "./pages/RelatorioFunileirosPage";
 import RelatorioFinanceiroPage from "./pages/RelatorioFinanceiroPage";
 import RelatorioEstoquePage from "./pages/RelatorioEstoquePage";
 import RelatorioServicosPage from "./pages/RelatorioServicosPage";
+import OrcamentosPage from "./pages/OrcamentosPage";
+import OrcamentoDetalhePage from "./pages/OrcamentoDetalhePage";
 
 function App() {
   const [sessao, setSessao] = useState(null);
@@ -131,6 +133,9 @@ function App() {
             <Route path="/relatorios/servicos" element={<RelatorioServicosPage />} />
             <Route path="/funcionarios" element={<FuncionariosPage />} />
             <Route path="/funcionarios/:id" element={<FuncionarioDetalhePage />} />
+            <Route path="/orcamentos" element={<OrcamentosPage />} />
+            <Route path="/orcamentos/novo" element={<OrcamentoDetalhePage />} />
+            <Route path="/orcamentos/:orcamentoId" element={<OrcamentoDetalhePage />} />
             <Route path="*" element={<div style={{ color: "#fff", padding: 40 }}><h1>Página não encontrada</h1></div>} />
           </Routes>
         </section>

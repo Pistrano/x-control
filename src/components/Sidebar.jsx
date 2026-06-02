@@ -11,7 +11,8 @@ import {
   FileBarChart,
   UserCog,
   Menu,
-  X
+  X,
+  FileText,
 } from "lucide-react";
 
 import { useState } from "react";
@@ -35,6 +36,11 @@ function Sidebar() {
       rota: "/servicos",
       label: "Serviços",
       icon: <Wrench size={20} />
+    },
+    {
+      rota: "/orcamentos",
+      label: "Orçamentos",
+      icon: <FileText size={20} />
     },
     {
       rota: "/lavagem",
