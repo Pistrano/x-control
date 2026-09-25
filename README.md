@@ -1,16 +1,97 @@
-# React + Vite
+# X-Control
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Sistema web desenvolvido para gestão de lava-rápidos, funilarias e oficinas automotivas, permitindo o controle de clientes, serviços, estoque, funcionários e relatórios financeiros em uma única plataforma.
 
-Currently, two official plugins are available:
+## Sobre o Projeto
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+O X-Control foi criado com o objetivo de facilitar a administração de negócios do setor automotivo, oferecendo ferramentas para acompanhamento de serviços, controle de estoque e gestão financeira.
 
-## React Compiler
+A aplicação centraliza informações importantes da empresa, reduzindo o uso de planilhas e melhorando a organização dos processos internos.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Funcionalidades
 
-## Expanding the ESLint configuration
+* Cadastro e gerenciamento de clientes
+* Controle de serviços realizados
+* Gestão de estoque
+* Controle de funcionários
+* Registro de custos e despesas
+* Relatórios financeiros
+* Relatórios de serviços
+* Relatórios de estoque
+* Geração de orçamentos
+* Integração com WhatsApp
+* Armazenamento em nuvem utilizando Supabase
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Tecnologias Utilizadas
+
+### Front-end
+
+* React
+* Vite
+* React Router DOM
+* Lucide React
+
+### Back-end e Banco de Dados
+
+* Supabase
+
+### Hospedagem
+
+* Vercel
+
+## Estrutura do Sistema
+
+O sistema é dividido em módulos:
+
+* Dashboard
+* Clientes
+* Serviços
+* Estoque
+* Funcionários
+* Custos
+* Orçamentos
+* Relatórios
+
+## Aprendizados
+
+Durante o desenvolvimento deste projeto foram aplicados conhecimentos de:
+
+* Desenvolvimento Front-end com React
+* Integração com banco de dados em nuvem
+* Gerenciamento de estado e rotas
+* Modelagem de dados
+* Autenticação de usuários
+* Desenvolvimento de interfaces responsivas
+* Deploy de aplicações web
+
+## Instalação
+
+Clone o repositório:
+
+```bash
+git clone https://github.com/SEU-USUARIO/x-control.git
+```
+
+Acesse a pasta:
+
+```bash
+cd x-control
+```
+
+Instale as dependências:
+
+```bash
+npm install
+```
+
+Execute o projeto:
+
+```bash
+npm run dev
+```
+
+## Autor
+
+Raphael Capistrano
+
+Estudante de Engenharia de Software, desenvolvendo soluções web focadas em gestão empresarial e automação de processos.
